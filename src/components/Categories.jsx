@@ -12,17 +12,13 @@ function Categories () {
     'Закриті'
   ]
 
-  const handleClickCategory = id => {
-    setActiveIndex(id)
-  }
-
   return (
     <div className='categories'>
       <ul>
         {categories.map((item, idx) => (
           <li
             key={idx}
-            onClick={() => handleClickCategory(idx)}
+            onClick={() => setActiveIndex(idx)}
             className={activeIndex === idx ? 'active' : ''}
           >
             {item}
