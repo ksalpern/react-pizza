@@ -1,4 +1,15 @@
+import React from 'react'
+
 function Sort () {
+  const [open, setOpen] = React.useState(false)
+  const [sortBy, setSortBy] = React.useState(0)
+
+  const sort = ['популярності', 'ціні', 'алфавіту']
+
+  const handleSortBy = id => {
+    setSortBy(id)
+    setOpen(!open)
+  }
   return (
     <div className='sort'>
       <div className='sort__label'>
@@ -15,15 +26,23 @@ function Sort () {
           />
         </svg>
         <b>Сортування по:</b>
-        <span>популярності</span>
+        <span onClick={() => setOpen(!open)}>{sort[sortBy]}</span>
       </div>
-      <div className='sort__popup'>
-        <ul>
-          <li className='active'>популярності</li>
-          <li>ціні</li>
-          <li>алфавіту</li>
-        </ul>
-      </div>
+      {open && (
+        <div className='sort__popup'>
+          <ul>
+            {sort.map((sort, idx) => (
+              <li
+                key={sort}
+                onClick={() => handleSortBy(idx)}
+                className={sortBy === idx ? 'active' : ''}
+              >
+                {sort}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
