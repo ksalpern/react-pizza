@@ -4,9 +4,17 @@ import PizzaBlock from './components/PizzaBlock';
 import Sort from './components/Sort';
 import './scss/app.scss'
 
-import pizzas from './pizzas.json'
+import React from 'react';
 
 function App() {
+  const [items, setItems] = React.useState([])
+
+  React.useEffect(() => {
+    fetch('https://64664e24ba7110b6639d5185.mockapi.io/items')
+      .then((res) => res.json())
+      .then((arr) => setItems(arr))
+  }, [])
+
 
   return (
     <div className="wrapper">
@@ -19,7 +27,7 @@ function App() {
           </div>
           <h2 className="content__title">Всі піци</h2>
           <div className="content__items">
-            {pizzas.map((pizza) => (
+            {items.map((pizza) => (
               <PizzaBlock key={pizza.id} {...pizza} />
             ))}
 
