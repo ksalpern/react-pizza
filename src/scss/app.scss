@@ -7,6 +7,14 @@ body {
   background-color: $background;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #232323;
+}
+
 .wrapper {
   width: calc(100vw - 100px);
   height: 100%;
@@ -26,13 +34,17 @@ body {
   &__items {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
   }
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
   }
 }
 
