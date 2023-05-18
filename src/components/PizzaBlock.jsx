@@ -9,8 +9,8 @@ function PizzaBlock () {
       <h4 className='pizza-block__title'>Чизбургер-пицца</h4>
       <div className='pizza-block__selector'>
         <ul>
-          <li className='active'>тонкое</li>
-          <li>традиционное</li>
+          <li className='active'>тонке</li>
+          <li>традиційне</li>
         </ul>
         <ul>
           <li className='active'>26 см.</li>
@@ -19,7 +19,7 @@ function PizzaBlock () {
         </ul>
       </div>
       <div className='pizza-block__bottom'>
-        <div className='pizza-block__price'>от 395 ₽</div>
+        <div className='pizza-block__price'>від 200 ₴</div>
         <div className='button button--outline button--add'>
           <svg
             width='12'
@@ -33,7 +33,7 @@ function PizzaBlock () {
               fill='white'
             />
           </svg>
-          <span>Добавить</span>
+          <span>Додати</span>
           <i>2</i>
         </div>
       </div>
