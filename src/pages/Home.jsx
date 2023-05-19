@@ -8,21 +8,34 @@ import Categories from '../components/Categories'
 const Home = () => {
   const [items, setItems] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
+  const [activeCategory, setActiveCategory] = React.useState(0)
+  const [sortBy, setSortBy] = React.useState({
+    name: 'популярності',
+    sort: 'rating'
+  })
 
   React.useEffect(() => {
-    fetch('https://64664e24ba7110b6639d5185.mockapi.io/items')
+    setIsLoading(true)
+    fetch(
+      `https://64664e24ba7110b6639d5185.mockapi.io/items?${
+        activeCategory > 0 ? `category=${activeCategory}` : ''
+      }&sortBy=${sortBy.sort}&order=desc`
+    )
       .then(res => res.json())
       .then(arr => {
         setItems(arr)
         setIsLoading(false)
       })
-  }, [])
+  }, [activeCategory, sortBy])
 
   return (
     <>
       <div className='content__top'>
-        <Categories />
-        <Sort />
+        <Categories
+          category={activeCategory}
+          setActiveCategory={i => setActiveCategory(i)}
+        />
+        <Sort sortBy={sortBy} setSortBy={i => setSortBy(i)} />
       </div>
       <h2 className='content__title'>Всі піци</h2>
       <div className='content__items'>

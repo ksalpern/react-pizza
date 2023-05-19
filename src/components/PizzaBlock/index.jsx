@@ -42,7 +42,7 @@ function PizzaBlock ({
         </ul>
       </div>
       <div className='pizza-block__bottom'>
-        <div className='pizza-block__price'>від 200 ₴</div>
+        <div className='pizza-block__price'>від {price} ₴</div>
         <div className='button button--outline button--add'>
           <svg
             width='12'
