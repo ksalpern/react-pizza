@@ -5,7 +5,7 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton.tsx'
 import Sort from '../components/Sort'
 import Categories from '../components/Categories'
 
-const Home = () => {
+const Home = ({ searchValue }) => {
   const [items, setItems] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
   const [activeCategory, setActiveCategory] = React.useState(0)
@@ -27,7 +27,16 @@ const Home = () => {
         setIsLoading(false)
       })
   }, [activeCategory, sortBy])
-
+  const pizzas = items
+    .filter(obj => {
+      if (
+        obj.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
+      ) {
+        return true
+      }
+      return false
+    })
+    .map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)
   return (
     <>
       <div className='content__top'>
@@ -41,7 +50,7 @@ const Home = () => {
       <div className='content__items'>
         {isLoading
           ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-          : items.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)}
+          : pizzas}
       </div>
     </>
   )
