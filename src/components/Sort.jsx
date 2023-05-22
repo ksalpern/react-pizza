@@ -1,16 +1,21 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSort } from '../redux/filter/slice'
 
-function Sort ({ sortBy, setSortBy }) {
+const sort = [
+  { name: 'популярності', sort: 'rating' },
+  { name: 'ціні', sort: 'price' },
+  { name: 'алфавіту', sort: 'title' }
+]
+
+function Sort () {
+  const dispatch = useDispatch()
+  const sortBy = useSelector(state => state.filter.sort)
+
   const [open, setOpen] = React.useState(false)
 
-  const sort = [
-    { name: 'популярності', sort: 'rating' },
-    { name: 'ціні', sort: 'price' },
-    { name: 'алфавіту', sort: 'title' }
-  ]
-
-  const handleSortBy = id => {
-    setSortBy(id)
+  const handleSortBy = obj => {
+    dispatch(setSort(obj))
     setOpen(!open)
   }
   return (

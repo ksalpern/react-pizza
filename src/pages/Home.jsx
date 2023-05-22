@@ -1,18 +1,19 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import PizzaBlock from '../components/PizzaBlock'
-import { Skeleton } from '../components/PizzaBlock/Skeleton.tsx'
 import Sort from '../components/Sort'
 import Categories from '../components/Categories'
+import { Skeleton } from '../components/PizzaBlock/Skeleton.tsx'
+import { setCategoryId } from '../redux/filter/slice'
 
 const Home = ({ searchValue }) => {
+  const dispatch = useDispatch()
+  const activeCategory = useSelector(state => state.filter.categoryId)
+  const sortBy = useSelector(state => state.filter.sort)
+
   const [items, setItems] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
-  const [activeCategory, setActiveCategory] = React.useState(0)
-  const [sortBy, setSortBy] = React.useState({
-    name: 'популярності',
-    sort: 'rating'
-  })
 
   React.useEffect(() => {
     setIsLoading(true)
@@ -42,9 +43,9 @@ const Home = ({ searchValue }) => {
       <div className='content__top'>
         <Categories
           category={activeCategory}
-          setActiveCategory={i => setActiveCategory(i)}
+          setActiveCategory={i => dispatch(setCategoryId(i))}
         />
-        <Sort sortBy={sortBy} setSortBy={i => setSortBy(i)} />
+        <Sort />
       </div>
       <h2 className='content__title'>Всі піци</h2>
       <div className='content__items'>
