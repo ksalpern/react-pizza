@@ -1,10 +1,25 @@
-.root {
+.search {
   border: 1px solid rgba(0, 0, 0, 0.105);
   padding: 12px 20px;
   width: 300px;
   border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
+
+  input {
+    border: none;
+  }
+
+  span {
+    position: absolute;
+    right: 5%;
+    color: rgb(27, 27, 27);
+    cursor: pointer;
+  }
 }
