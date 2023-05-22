@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
 
 import PizzaBlock from '../components/PizzaBlock'
 import Sort from '../components/Sort'
@@ -17,14 +18,15 @@ const Home = ({ searchValue }) => {
 
   React.useEffect(() => {
     setIsLoading(true)
-    fetch(
-      `https://64664e24ba7110b6639d5185.mockapi.io/items?${
-        activeCategory > 0 ? `category=${activeCategory}` : ''
-      }&sortBy=${sortBy.sort}&order=desc`
-    )
-      .then(res => res.json())
-      .then(arr => {
-        setItems(arr)
+
+    axios
+      .get(
+        `https://64664e24ba7110b6639d5185.mockapi.io/items?${
+          activeCategory > 0 ? `category=${activeCategory}` : ''
+        }&sortBy=${sortBy.sort}&order=desc`
+      )
+      .then(res => {
+        setItems(res.data)
         setIsLoading(false)
       })
   }, [activeCategory, sortBy])
