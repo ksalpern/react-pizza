@@ -1,6 +1,5 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
 import qs from 'qs'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,42 +9,27 @@ import Categories from '../components/Categories'
 import { Skeleton } from '../components/PizzaBlock/Skeleton.tsx'
 import { setCategoryId, setFilters } from '../redux/filter/slice'
 import { sortList } from '../components/Sort'
+import { fetchPizzas } from '../redux/pizza/slice'
 
 const Home = ({ searchValue }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const categoryId = useSelector(state => state.filter.categoryId)
   const sortBy = useSelector(state => state.filter.sort)
+  const { items, status } = useSelector(state => state.pizza)
+
   const isSearch = React.useRef(false)
   const isMounted = React.useRef(false)
 
-  const [items, setItems] = React.useState([])
-  const [isLoading, setIsLoading] = React.useState(true)
-
-  const fetchPizzas = async () => {
-    setIsLoading(true)
-
-    try {
-      const res = await axios.get(
-        `https://64664e24ba7110b6639d5185.mockapi.io/items?${
-          categoryId > 0 ? `category=${categoryId}` : ''
-        }&sortBy=${sortBy.sort}&order=desc`
-      )
-      setItems(res.data)
-    } catch (error) {
-      console.log(error + 'axios error')
-      alert('помилка при отриманні піцок')
-    } finally {
-      setIsLoading(false)
-    }
+  const getPizzas = async () => {
+    const sortByParam = sortBy.sort
+    dispatch(fetchPizzas({ sortByParam, categoryId }))
   }
 
   React.useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1))
-
       const sort = sortList.find(obj => obj.sort === params.sort)
-
       dispatch(
         setFilters({
           ...params,
@@ -58,7 +42,7 @@ const Home = ({ searchValue }) => {
 
   React.useEffect(() => {
     if (!isSearch.current) {
-      fetchPizzas()
+      getPizzas()
     }
     isSearch.current = false
   }, [categoryId, sortBy])
@@ -95,11 +79,18 @@ const Home = ({ searchValue }) => {
         <Sort />
       </div>
       <h2 className='content__title'>Всі піци</h2>
-      <div className='content__items'>
-        {isLoading
-          ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-          : pizzas}
-      </div>
+      {status === 'error' ? (
+        <div className='content__error-info'>
+          <h2>Сталась помилка 😕</h2>
+          <p>На жаль не вдалось отримати піцки. Спробуйте пізніше.</p>
+        </div>
+      ) : (
+        <div className='content__items'>
+          {status === 'loading'
+            ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
+            : pizzas}
+        </div>
+      )}
     </>
   )
 }
