@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addProduct } from '../../redux/cart/slice'
+import { addProduct, selectCartItemById } from '../../redux/cart/slice'
 
 function PizzaBlock ({
   id,
@@ -18,9 +18,7 @@ function PizzaBlock ({
   const typeNames = ['тонке', 'традиційне']
 
   const dispatch = useDispatch()
-  const pizzaCount = useSelector(state =>
-    state.cart.items.find(obj => obj.id === id)
-  )
+  const pizzaCount = useSelector(selectCartItemById(id))
 
   const pizzaQuantity = pizzaCount ? pizzaCount.count : 0
 

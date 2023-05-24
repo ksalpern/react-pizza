@@ -7,22 +7,21 @@ import PizzaBlock from '../components/PizzaBlock'
 import Sort from '../components/Sort'
 import Categories from '../components/Categories'
 import { Skeleton } from '../components/PizzaBlock/Skeleton.tsx'
-import { setCategoryId, setFilters } from '../redux/filter/slice'
+import { selectFilter, setCategoryId, setFilters } from '../redux/filter/slice'
 import { sortList } from '../components/Sort'
-import { fetchPizzas } from '../redux/pizza/slice'
+import { fetchPizzas, selectPizzaData } from '../redux/pizza/slice'
 
-const Home = ({ searchValue }) => {
+const Home = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const categoryId = useSelector(state => state.filter.categoryId)
-  const sortBy = useSelector(state => state.filter.sort)
-  const { items, status } = useSelector(state => state.pizza)
+  const { categoryId, sort, searchValue } = useSelector(selectFilter)
+  const { items, status } = useSelector(selectPizzaData)
 
   const isSearch = React.useRef(false)
   const isMounted = React.useRef(false)
 
   const getPizzas = async () => {
-    const sortByParam = sortBy.sort
+    const sortByParam = sort.sort
     dispatch(fetchPizzas({ sortByParam, categoryId }))
   }
 
@@ -45,22 +44,22 @@ const Home = ({ searchValue }) => {
       getPizzas()
     }
     isSearch.current = false
-  }, [categoryId, sortBy])
+  }, [categoryId, sort])
 
   React.useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
-        sort: sortBy.sort,
+        sort: sort.sort,
         categoryId
       })
 
       navigate(`?${queryString}`)
     }
     isMounted.current = true
-  }, [categoryId, sortBy])
+  }, [categoryId, sort])
 
   const pizzas = items
-    .filter(obj => {
+    ?.filter(obj => {
       if (
         obj.title.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
       ) {
