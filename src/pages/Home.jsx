@@ -22,19 +22,22 @@ const Home = ({ searchValue }) => {
   const [items, setItems] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true)
 
-    axios
-      .get(
+    try {
+      const res = await axios.get(
         `https://64664e24ba7110b6639d5185.mockapi.io/items?${
           categoryId > 0 ? `category=${categoryId}` : ''
         }&sortBy=${sortBy.sort}&order=desc`
       )
-      .then(res => {
-        setItems(res.data)
-        setIsLoading(false)
-      })
+      setItems(res.data)
+    } catch (error) {
+      console.log(error + 'axios error')
+      alert('помилка при отриманні піцок')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   React.useEffect(() => {
