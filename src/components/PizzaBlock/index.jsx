@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addProduct, selectCartItemById } from '../../redux/cart/slice'
+import { Link } from 'react-router-dom'
 
 function PizzaBlock ({
   id,
@@ -36,8 +37,10 @@ function PizzaBlock ({
 
   return (
     <div className='pizza-block'>
-      <img className='pizza-block__image' src={imageUrl} alt={title} />
-      <h4 className='pizza-block__title'>{title}</h4>
+      <Link key={id} to={`/pizza/${id}`}>
+        <img className='pizza-block__image' src={imageUrl} alt={title} />
+        <h4 className='pizza-block__title'>{title}</h4>
+      </Link>
       <div className='pizza-block__selector'>
         <ul>
           {types.map(type => (

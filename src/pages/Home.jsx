@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import qs from 'qs'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import PizzaBlock from '../components/PizzaBlock'
 import Sort from '../components/Sort'
@@ -67,11 +67,7 @@ const Home = () => {
       }
       return false
     })
-    .map(pizza => (
-      <Link key={pizza.id} to={`pizza/${pizza.id}`}>
-        <PizzaBlock {...pizza} />
-      </Link>
-    ))
+    .map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)
   return (
     <>
       <div className='content__top'>
