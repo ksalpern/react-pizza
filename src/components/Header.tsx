@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux'
 import { selectCart } from '../redux/cart/slice'
 
 function Header () {
-  const { items, totalPrice, searchValue } = useSelector(selectCart)
+  const { items, totalPrice } = useSelector(selectCart)
   const { pathname } = useLocation()
 
-  const totalQuantity = items.reduce((sum, item) => sum + item.count, 0)
+  const totalQuantity = items.reduce((sum: number, item: any) => sum + item.count, 0);
 
   return (
     <div className='header'>
@@ -23,7 +23,7 @@ function Header () {
         </Link>
         {pathname !== '/cart' && (
           <>
-            <Search searchValue={searchValue} />
+            <Search/>
             <div className='header__cart'>
               <Link to='/cart' className='button button--cart'>
                 <span>{totalPrice} ₴</span>
