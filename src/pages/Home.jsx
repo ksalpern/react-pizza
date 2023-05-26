@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import PizzaBlock from '../components/PizzaBlock'
 import Sort from '../components/Sort'
-import Categories from '../components/Categories'
+import { Categories } from '../components/Categories'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import { selectFilter, setCategoryId, setFilters } from '../redux/filter/slice'
 import { sortList } from '../components/Sort'

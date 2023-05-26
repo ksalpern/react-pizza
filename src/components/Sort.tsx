@@ -11,24 +11,19 @@ type PopupClick = MouseEvent & {
   path: Node[];
 };
 
-// type SortPopupProps = {
-//   value: SortType;
-// };
-
 export const sortList: SortItem[] = [
   { name: 'популярності', sort: SortPropertyEnum.RATING },
   { name: 'ціні', sort: SortPropertyEnum.PRICE },
   { name: 'алфавіту', sort: SortPropertyEnum.TITLE },
 ];
 
-const Sort: React.FC = () => {
+const Sort: React.FC = React.memo(() => {
   const dispatch = useDispatch();
   const sortBy = useSelector(selectSort);
 
   const sortRef = React.useRef<HTMLDivElement>(null);
   const [open, setOpen] = React.useState(false);
 
-  
   React.useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (sortRef.current && !sortRef.current.contains(event.target)) {
@@ -40,19 +35,6 @@ const Sort: React.FC = () => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
-  // React.useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     const _event = event as PopupClick;
-
-  //     if (sortRef.current && !_event.path.includes(sortRef.current)) {
-  //       setOpen(false);
-  //     }
-  //   };
-
-  //   document.body.addEventListener('click', handleClickOutside);
-
-  //   return () => document.body.removeEventListener('click', handleClickOutside);
-  // }, []);
 
   const handleSortBy = (obj: SortItem) => {
     dispatch(setSort(obj));
@@ -91,6 +73,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;
