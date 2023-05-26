@@ -9,7 +9,7 @@ const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector(selectCart);
 
-  const totalQuantity = items.reduce((sum, item) => sum + item.count, 0);
+  const totalQuantity = items.reduce((sum: number, item: any) => sum + item.count, 0);
 
   const handleClear = () => {
     if (window.confirm('Очистити корзину?')) {
