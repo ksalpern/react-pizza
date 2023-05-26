@@ -1,6 +1,6 @@
 # React Pizza app
 
-Click [here](https://react-pizza-ksalpern.netlify.app/) to see the app😃
+Click [here](https://ks-react-pizza.netlify.app/) to see the app😃
 
 ## Follow this steps to start project on your local machine:
 
